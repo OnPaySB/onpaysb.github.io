@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>OnPay API v1</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/themes/prism.min.css">
+<style type="text/css">
+body {
+padding-top: 1rem;
+padding-bottom: 2rem;
+}
+.arguments-table {
+margin-top: 2rem;
+margin-bottom: 2rem;
+}
+.arguments-table thead th:nth-child(1) {
+width: 160px;
+}
+.arguments-table thead th:nth-child(2) {
+width: 150px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>OnPay API v1</h1>
+<h2>Introduction</h2>
+<hr />
+<p>The API v1 is a collection of HTTP RPC-style methods where the general structure of the URL is <code>https://account.onpay.my/api/v1/method_name</code>.</p>
+<p>Use HTTPS when calling all methods. Any call through HTTP will be rejected.</p>
+<p>Arguments can be passed as GET or POST parameters, depending on what request method is accepted by the method.</p>
+<p>A response is returned as a JSON object and contains <code>ok</code> boolean field, indicating success or failure. In case of a failure, <code>message</code> field is available and contains a short description of the failure.</p>
+<p>All API calls must have <code>token</code> parameter with valid token value for authentication purpose.</p>
+<p>You can activate API function and  get the token at <strong>Tetapan &gt; Sistem &gt; API &amp; Webhook</strong> in your account.</p>
+<p><br></p>
+<h2>Methods</h2>
+<hr />
+<h3><code>sales.list</code></h3>
+<p>Returns a list of sale records.</p>
+<pre><code class="language-none">GET https://account.onpay.my/api/v1/sales.list</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Argument</th>
+<th style="text-align: center;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>token</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Authentication token.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>page</code></td>
+<td style="text-align: center;">optional, default=<code>1</code></td>
+<td style="text-align: left;">Page number for pagination</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>per_page</code></td>
+<td style="text-align: center;">optional, default=<code>20</code></td>
+<td style="text-align: left;">Records per page. Max value is <code>100</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ids</code></td>
+<td style="text-align: center;">optional</td>
+<td style="text-align: left;">Filter by record IDs, where multiple IDs are separated by commas.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>filter_column</code></td>
+<td style="text-align: center;">optional</td>
+<td style="text-align: left;">Filter by specific column. Allowed columns are <code>client_fullname</code>, <code>client_email</code>, <code>client_phone_number</code>, <code>client_address</code>, <code>extra_field_1</code>, <code>extra_field_2</code>, <code>extra_field_3</code>, <code>products</code>, <code>invoice_number</code> and <code>agent_username</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>filter_value</code></td>
+<td style="text-align: center;">optional</td>
+<td style="text-align: left;">Value used for <code>filter_column</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sort_column</code></td>
+<td style="text-align: center;">optional, default=<code>created_at</code></td>
+<td style="text-align: left;">Sort by speficic column. Allowed columns are <code>id</code>, <code>client_email</code>, <code>client_phone_number</code> and <code>created_at</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sort_dir</code></td>
+<td style="text-align: center;">optional, default=<code>asc</code></td>
+<td style="text-align: left;">Sort direction. Allowed values are <code>asc</code> and <code>desc</code>.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-json">{"ok":true,"record_count":389,"per_page":20,"sales":[{...}],[{...}]}</code></pre>
+<p><br></p>
+<h3><code>sales.get</code></h3>
+<p>Returns a sale record.</p>
+<pre><code class="language-none">GET https://account.onpay.my/api/v1/sales.get</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Argument</th>
+<th style="text-align: center;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>token</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Authentication token.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Record ID.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-json">{"ok":true,"sale":{...}}</code></pre>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/components/prism-php.min.js"></script>
+<script type="text/javascript">
+$(function() {
+$("table").addClass("table table-bordered arguments-table");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>OnPay Webhook</title>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/themes/prism.min.css">
+<style type="text/css">
+body {
+padding-top: 1rem;
+padding-bottom: 2rem;
+}
+.arguments-table {
+margin-top: 2rem;
+margin-bottom: 2rem;
+}
+.arguments-table thead th:nth-child(1) {
+width: 160px;
+}
+.arguments-table thead th:nth-child(2) {
+width: 150px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>OnPay Webhook</h1>
+<h2>Introduction</h2>
+<hr />
+<p>The webhook will send HTTP POST request to the specified URL. Each order form can be set with their own unique webhook URL.</p>
+<p>A webhook request will contain data in JSON format with <code>application/json</code> header. A webhook request will always contain <code>token</code> and <code>event_type</code> fields.</p>
+<p>A <code>token</code> field can be used for verification purpose while an <code>event_type</code> field can be used to determine event type of the webhook.</p>
+<p>The URL must respond with HTTP status code <code>200 OK</code> if the data is received successfully.</p>
+<p>A webhook request will timeout after 30 seconds. If the first attempt is unsuccessful, the system will retry up to 4 times (in 5 minutes, 15 minutes, 1 hour and 5 hours).</p>
+<p>You can activate webhook function and get the token at <strong>Tetapan &gt; Sistem &gt; API &amp; Webhook</strong> in your account.</p>
+<p><br></p>
+<h2>Events</h2>
+<hr />
+<h3><code>sale.created</code></h3>
+<p>Data will be sent to the webhook URL when a sale record is created, after an order is received by the system.</p>
+<h3><code>sale.confirmed</code></h3>
+<p>Data will be sent to the webhook URL when a sale record is confirmed.</p>
+<h3><code>sale.canceled</code></h3>
+<p>Data will be sent to the webhook URL when a confirmed sale record is canceled.</p>
+<p><br></p>
+<h2>Code Example</h2>
+<hr />
+<p>The following code is for handling webhook on your part, using PHP.</p>
+<pre><code class="language-php">&lt;?php
+$webhook_token = 'your token here';
+
+$raw_data = file_get_contents('php://input');
+$data = json_decode($raw_data, true);
+
+if (hash_equals($webhook_token, $data['token'])) {
+    if ($data['event_type'] === 'sale.created') {
+        # Do your process here
+    } elseif ($data['event_type'] === 'sale.confirmed') {
+        # Do your process here
+    } elseif ($data['event_type'] === 'sale.canceled') {
+        # Do your process here
+    }
+}
+?&gt;
+</code></pre>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.9.0/components/prism-php.min.js"></script>
+<script type="text/javascript">
+$(function() {
+$("table").addClass("table table-bordered arguments-table");
+});
+</script>
+</body>
+</html>
