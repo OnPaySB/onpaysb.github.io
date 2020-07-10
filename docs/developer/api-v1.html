@@ -30,7 +30,7 @@ width: 150px;
 <h1>OnPay API v1</h1>
 <h2>Introduction</h2>
 <hr />
-<p>The API v1 is a collection of HTTP RPC-style methods where the general structure of the URL is <code>https://account.onpay.my/api/v1/method_name</code>.</p>
+<p>The API v1 is a collection of HTTP RPC-style methods where the general structure of the URL is <code>https://account.onpay.my/api/v1/method_family.method_name</code>.</p>
 <p>Use HTTPS when calling all methods. Any call through HTTP will be rejected.</p>
 <p>Arguments can be passed as GET or POST parameters, depending on what request method is accepted by the method.</p>
 <p>A response is returned as a JSON object and contains <code>ok</code> boolean field, indicating success or failure. In case of a failure, <code>message</code> field is available and contains a short description of the failure.</p>
@@ -40,7 +40,7 @@ width: 150px;
 <h2>Methods</h2>
 <hr />
 <h3><code>sales.list</code></h3>
-<p>Returns a list of sale records.</p>
+<p>Return a list of sale records.</p>
 <pre><code class="language-none">GET https://account.onpay.my/api/v1/sales.list</code></pre>
 <table>
 <thead>
@@ -96,7 +96,7 @@ width: 150px;
 <pre><code class="language-json">{"ok":true,"record_count":389,"per_page":20,"sales":[{...}],[{...}]}</code></pre>
 <p><br></p>
 <h3><code>sales.get</code></h3>
-<p>Returns a sale record.</p>
+<p>Return a sale record.</p>
 <pre><code class="language-none">GET https://account.onpay.my/api/v1/sales.get</code></pre>
 <table>
 <thead>
@@ -120,6 +120,42 @@ width: 150px;
 </tbody>
 </table>
 <pre><code class="language-json">{"ok":true,"sale":{...}}</code></pre>
+<p><br></p>
+<h3><code>sales.update_shipping_info</code></h3>
+<p>Update shipping info of the sale record.</p>
+<pre><code class="language-none">POST https://account.onpay.my/api/v1/sales.update_shipping_info</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Argument</th>
+<th style="text-align: center;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>token</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Authentication token.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Record ID.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>shipping_courier</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Courier name.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>shipping_tracking_code</code></td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: left;">Tracking code or number.</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-json">{"ok":true}</code></pre>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -3,7 +3,7 @@
 ## Introduction
 ---
 
-The API v1 is a collection of HTTP RPC-style methods where the general structure of the URL is `https://account.onpay.my/api/v1/method_name`.
+The API v1 is a collection of HTTP RPC-style methods where the general structure of the URL is `https://account.onpay.my/api/v1/method_family.method_name`.
 
 Use HTTPS when calling all methods. Any call through HTTP will be rejected.
 
@@ -22,7 +22,7 @@ You can activate API function and  get the token at **Tetapan > Sistem > API & W
 
 ### `sales.list`
 
-Returns a list of sale records.
+Return a list of sale records.
 
 ```none
 GET https://account.onpay.my/api/v1/sales.list
@@ -47,7 +47,7 @@ GET https://account.onpay.my/api/v1/sales.list
 
 ### `sales.get`
 
-Returns a sale record.
+Return a sale record.
 
 ```none
 GET https://account.onpay.my/api/v1/sales.get
@@ -60,4 +60,25 @@ GET https://account.onpay.my/api/v1/sales.get
 
 ```json
 {"ok":true,"sale":{...}}
+```
+
+<br>
+
+### `sales.update_shipping_info`
+
+Update shipping info of the sale record.
+
+```none
+POST https://account.onpay.my/api/v1/sales.update_shipping_info
+```
+
+|Argument|Required|Description|
+|:-------|:------:|:----------|
+|`token`|yes|Authentication token.|
+|`id`|yes|Record ID.|
+|`shipping_courier`|yes|Courier name.|
+|`shipping_tracking_code`|yes|Tracking code or number.|
+
+```json
+{"ok":true}
 ```
