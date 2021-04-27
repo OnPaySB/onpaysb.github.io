@@ -43,13 +43,13 @@ $raw_data = file_get_contents('php://input');
 $data = json_decode($raw_data, true);
 
 if (hash_equals($webhook_token, $data['token'])) {
-	if ($data['event_type'] === 'sale.created') {
-		# Do your process here
-	} elseif ($data['event_type'] === 'sale.confirmed') {
-		# Do your process here
-	} elseif ($data['event_type'] === 'sale.canceled') {
-		# Do your process here
-	}
+    if ($data['event_type'] === 'sale.created') {
+        # Do your process here
+    } elseif ($data['event_type'] === 'sale.confirmed') {
+        # Do your process here
+    } elseif ($data['event_type'] === 'sale.canceled') {
+        # Do your process here
+    }
 }
 ?>
 
